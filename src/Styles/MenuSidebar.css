@@ -1,0 +1,9 @@
+.menu-container {
+    border: none;
+    background-color: aliceblue;
+    border-radius: 7px 7px;
+    min-width: 40px;
+    margin: 20px;
+    margin-top: 20px;
+    padding-top: 20px;
+}
