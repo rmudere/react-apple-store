@@ -1,15 +1,22 @@
 import './App.css';
-import Homepage from "./Components/Homepage";
 import MenuSidebar from './Components/MenuSidebar';
-import {Outlet} from "react-router";
+import {deleteAllProducts, getProducts, populateProducts} from "./productsService";
+import {Outlet} from "react-router-dom";
 
 function App() {
-  return (
-    <div className="main-container">
-      <MenuSidebar />
-        <Outlet />
-    </div>
-  );
+    //deleteAllProducts().then(d=>console.log(d));
+    //populateProducts().then(r => console.log(r));
+    return (
+        <div className="main-container">
+            <MenuSidebar/>
+            <Outlet/>
+        </div>
+    );
+}
+
+export async function loader() {
+    const products = await getProducts();
+    return {products};
 }
 
 export default App;

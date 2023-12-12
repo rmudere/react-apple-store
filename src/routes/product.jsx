@@ -1,6 +1,15 @@
-import { Form } from "react-router-dom";
+import {Form, useLoaderData} from "react-router-dom";
+import {getProduct} from "../productsService";
 
+export async function loader({params}){
+    const product = await getProduct(Number.parseInt(params.productId));
+    console.log(`The product is ${JSON.stringify(product)} For id `)
+
+    return {product}
+}
 export default function Product() {
+    const { product } = useLoaderData();
+
     const contact = {
         first: "Your",
         last: "Name",
@@ -14,55 +23,41 @@ export default function Product() {
         <div id="contact">
             <div>
                 <img
-                    key={contact.avatar}
-                    src={contact.avatar || null}
+                    key={product.image}
+                    src={product.image || null}
                 />
             </div>
 
             <div>
                 <h1>
-                    {contact.first || contact.last ? (
+                    {product.name  ? (
                         <>
-                            {contact.first} {contact.last}
+                            {product.name}
                         </>
                     ) : (
                         <i>No Name</i>
                     )}{" "}
                     <Favorite contact={contact} />
                 </h1>
-
-                {contact.twitter && (
+                <h2>
+                    {product.price ? (
+                        <>
+                            {product.price}
+                        </>
+                    ) : (
+                        <i>" "</i>
+                    )}
+                </h2>
+                {product.description && (
                     <p>
-                        <a
-                            target="_blank"
-                            href={`https://twitter.com/${contact.twitter}`}
-                        >
-                            {contact.twitter}
-                        </a>
+                        {product.description}
+
                     </p>
                 )}
 
-                {contact.notes && <p>{contact.notes}</p>}
 
                 <div>
-                    <Form action="edit">
-                        <button type="submit">Edit</button>
-                    </Form>
-                    <Form
-                        method="post"
-                        action="destroy"
-                        onSubmit={(event) => {
-                            if (
-                                !window.confirm(
-                                    "Please confirm you want to delete this record."
-                                )
-                            ) {
-                                event.preventDefault();
-                            }
-                        }}
-                    >
-                        <button type="submit">Delete</button>
-                    </Form>
+
                 </div>
             </div>
         </div>

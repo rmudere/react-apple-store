@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
+import App , { loader as rootLoader } from './App';
+import {loader as productLoader} from "./routes/product";
 import ErrorPage from "./error-page";
 import reportWebVitals from './reportWebVitals';
 import {createBrowserRouter,RouterProvider} from "react-router-dom";
@@ -13,14 +14,17 @@ const router = createBrowserRouter([
         path: "/",
         element: <App />,
         errorElement: <ErrorPage />,
+        loader: rootLoader,
         children:[
             {
             path:"",
-            element: <Homepage/>
+            element: <Homepage/>,
+            loader: rootLoader,
         },
             {
                 path: "product/:productId",
                 element: <Product />,
+                loader: productLoader,
             },
         ]
     },
